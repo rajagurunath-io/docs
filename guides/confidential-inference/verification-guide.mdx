@@ -195,7 +195,7 @@ from eth_account.messages import encode_defunct
 from eth_account import Account
 
 class ConfidentialClient:
-    def __init__(self, api_key: str, base_url: str = "https://api.intelligence.io.net/v1/private"):
+    def __init__(self, api_key: str, base_url: str = "https://api.intelligence.io.solutions/v1/private"):
         self.api_key = api_key
         self.base_url = base_url
         self.attestation = None

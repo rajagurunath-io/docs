@@ -15,7 +15,7 @@ First, list available models and filter for those supporting attestation:
 ### curl
 
 ```bash
-curl -s https://api.intelligence.io.net/v1/models \
+curl -s https://api.intelligence.io.solutions/v1/models \
   -H "Authorization: Bearer $IO_API_KEY" | \
   jq '.data[] | select(.supports_attestation == true) | {name, model_id}'
 ```
@@ -26,7 +26,7 @@ curl -s https://api.intelligence.io.net/v1/models \
 import requests
 
 response = requests.get(
-    "https://api.intelligence.io.net/v1/models",
+    "https://api.intelligence.io.solutions/v1/models",
     headers={"Authorization": f"Bearer {IO_API_KEY}"}
 )
 
@@ -50,7 +50,7 @@ Before running inference, request an attestation report to verify the GPU machin
 NONCE=$(openssl rand -hex 16)
 
 # Request attestation report
-curl -X POST https://api.intelligence.io.net/v1/private/attestation \
+curl -X POST https://api.intelligence.io.solutions/v1/private/attestation \
   -H "Authorization: Bearer $IO_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -69,7 +69,7 @@ import requests
 nonce = secrets.token_hex(16)
 
 response = requests.post(
-    "https://api.intelligence.io.net/v1/private/attestation",
+    "https://api.intelligence.io.solutions/v1/private/attestation",
     headers={
         "Authorization": f"Bearer {IO_API_KEY}",
         "Content-Type": "application/json"
@@ -121,7 +121,7 @@ Now run inference using the confidential completions endpoint. The request forma
 ### curl
 
 ```bash
-curl -X POST https://api.intelligence.io.net/v1/private/completions \
+curl -X POST https://api.intelligence.io.solutions/v1/private/completions \
   -H "Authorization: Bearer $IO_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -138,7 +138,7 @@ curl -X POST https://api.intelligence.io.net/v1/private/completions \
 
 ```python
 response = requests.post(
-    "https://api.intelligence.io.net/v1/private/completions",
+    "https://api.intelligence.io.solutions/v1/private/completions",
     headers={
         "Authorization": f"Bearer {IO_API_KEY}",
         "Content-Type": "application/json"
@@ -225,8 +225,8 @@ from eth_account.messages import encode_defunct
 from eth_account import Account
 
 IO_API_KEY = "your-api-key"
-BASE_URL = "https://api.intelligence.io.net/v1"
-PRIVATE_URL = "https://api.intelligence.io.net/v1/private"
+BASE_URL = "https://api.intelligence.io.solutions/v1"
+PRIVATE_URL = "https://api.intelligence.io.solutions/v1/private"
 
 def get_attestation_models():
     """Get models that support attestation."""
