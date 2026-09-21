@@ -1,0 +1,34 @@
+name: docs-check
+
+# Runs on pull requests, and on direct pushes to main. The push trigger is
+# deliberate: most history in this repo came from the Mintlify web editor,
+# which commits straight to main without a PR. Those commits cannot be
+# blocked here, but they should at least surface a red check.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: docs-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # `mint@latest` rather than a pinned version, on purpose: Mintlify builds
+      # production with latest, so pinning here would let CI pass while the real
+      # deploy fails. The trade-off is that a mint release can turn this red
+      # without a docs change.
+      - name: Validate build
+        run: npx --yes mint@latest validate
+
+      - name: Check internal links
+        run: npx --yes mint@latest broken-links
