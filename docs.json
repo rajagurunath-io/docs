@@ -11,6 +11,18 @@
     {
       "source": "/index",
       "destination": "/guides/getting-started"
+    },
+    {
+      "source": "/guides/clouds/deploy-bare-metal-cluster",
+      "destination": "/guides/clouds/managed-services"
+    },
+    {
+      "source": "/guides/clouds/deploy-kubernetes-cluster",
+      "destination": "/guides/clouds/managed-services"
+    },
+    {
+      "source": "/guides/clouds/deploy-mega-ray-cluster",
+      "destination": "/guides/clouds/managed-services"
     }
   ],
   "appearance": {
@@ -115,12 +127,11 @@
           {
             "group": "Managed Services",
             "pages": [
-              "guides/clouds/deploy-bare-metal-cluster",
+              "guides/clouds/managed-services",
               {
                 "group": "Kubernetes",
                 "tag": "UPDATED",
                 "pages": [
-                  "guides/clouds/deploy-kubernetes-cluster",
                   "guides/clouds/kubernetes-ingress-setup",
                   "guides/clouds/kubernetes/exposing-to-the-internet",
                   "guides/clouds/kubernetes/externaldns-guide",
