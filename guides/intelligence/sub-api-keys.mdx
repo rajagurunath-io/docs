@@ -42,7 +42,7 @@ All sub-key management endpoints use your **admin API key** in the `x-api-key` h
 <Steps>
   <Step title="Call the create endpoint with your admin key">
     ```bash
-    curl -X POST "https://api.intelligence.io.solutions/v1/api-keys/sub-keys" \
+    curl -X POST "https://api.io.solutions/v1/api-keys/sub-keys" \
       -H "x-api-key: $ADMIN_API_KEY" \
       -H "Content-Type: application/json" \
       -d '{
@@ -98,7 +98,7 @@ The `GET /v1/models` endpoint, when called with a sub-key, returns only the mode
 To remove all restrictions on an existing sub-key, pass an empty array:
 
 ```bash
-curl -X PATCH "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/{key_id}" \
+curl -X PATCH "https://api.io.solutions/v1/api-keys/sub-keys/{key_id}" \
   -H "x-api-key: $ADMIN_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"allowed_models": []}'
@@ -120,7 +120,7 @@ The block clears automatically when the cycle resets (`credit_refresh_cycle`), o
 
     **Raise the limit immediately:**
     ```bash
-    curl -X PATCH "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/{key_id}" \
+    curl -X PATCH "https://api.io.solutions/v1/api-keys/sub-keys/{key_id}" \
       -H "x-api-key: $ADMIN_API_KEY" \
       -H "Content-Type: application/json" \
       -d '{"credit_limit": 50.0}'
@@ -131,13 +131,13 @@ The block clears automatically when the cycle resets (`credit_refresh_cycle`), o
   <Accordion title="How do I check how much a sub-key has spent?">
     Use the admin endpoint to inspect a specific key:
     ```bash
-    curl "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/{key_id}/usage" \
+    curl "https://api.io.solutions/v1/api-keys/sub-keys/{key_id}/usage" \
       -H "x-api-key: $ADMIN_API_KEY"
     ```
 
     Or let the sub-key check itself:
     ```bash
-    curl "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/me/usage" \
+    curl "https://api.io.solutions/v1/api-keys/sub-keys/me/usage" \
       -H "x-api-key: $SUB_API_KEY"
     ```
   </Accordion>
@@ -179,7 +179,7 @@ The prefix does not change any functionality — it is purely cosmetic for organ
 ### Listing keys
 
 ```bash
-curl "https://api.intelligence.io.solutions/v1/api-keys/sub-keys" \
+curl "https://api.io.solutions/v1/api-keys/sub-keys" \
   -H "x-api-key: $ADMIN_API_KEY"
 ```
 
@@ -190,7 +190,7 @@ Returns all active sub-keys with their current `credit_used` for the active bill
 All fields on a sub-key can be updated at any time. Only the fields you include in the `PATCH` body are changed:
 
 ```bash
-curl -X PATCH "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/{key_id}" \
+curl -X PATCH "https://api.io.solutions/v1/api-keys/sub-keys/{key_id}" \
   -H "x-api-key: $ADMIN_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -203,7 +203,7 @@ curl -X PATCH "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/{key_i
 ### Revoking a key
 
 ```bash
-curl -X DELETE "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/{key_id}" \
+curl -X DELETE "https://api.io.solutions/v1/api-keys/sub-keys/{key_id}" \
   -H "x-api-key: $ADMIN_API_KEY"
 ```
 
@@ -214,7 +214,7 @@ Revocation is immediate and permanent. Any subsequent inference call with the re
 ### All sub-keys (admin)
 
 ```bash
-curl "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/usage" \
+curl "https://api.io.solutions/v1/api-keys/sub-keys/usage" \
   -H "x-api-key: $ADMIN_API_KEY"
 ```
 
@@ -223,14 +223,14 @@ Returns a per-key breakdown of token consumption and credit cost, grouped by mod
 ### Single sub-key (admin)
 
 ```bash
-curl "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/{key_id}/usage" \
+curl "https://api.io.solutions/v1/api-keys/sub-keys/{key_id}/usage" \
   -H "x-api-key: $ADMIN_API_KEY"
 ```
 
 ### Self-service (sub-key holder)
 
 ```bash
-curl "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/me/usage" \
+curl "https://api.io.solutions/v1/api-keys/sub-keys/me/usage" \
   -H "x-api-key: $SUB_API_KEY"
 ```
 

@@ -16,7 +16,7 @@ This endpoint is authenticated with the **sub-key itself**, not the admin key. I
 A service that holds a sub-key can call this endpoint periodically to determine how much credit remains before being blocked:
 
 ```bash
-curl "https://api.intelligence.io.solutions/v1/api-keys/sub-keys/me/usage" \
+curl "https://api.io.solutions/v1/api-keys/sub-keys/me/usage" \
   -H "x-api-key: $SUB_API_KEY"
 ```
 
