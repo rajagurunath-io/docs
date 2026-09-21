@@ -10,7 +10,7 @@
   "redirects": [
     {
       "source": "/index",
-      "destination": "/guides/inception"
+      "destination": "/guides/getting-started"
     }
   ],
   "appearance": {
@@ -101,56 +101,41 @@
               "guides/clouds/start-using-io-cloud",
               "guides/clouds/monitor-manage-clusters",
               "guides/clouds/deploy-containers",
-              "guides/clouds/deploy-bare-metal-cluster",
               {
                 "group": "VM on Demand",
                 "tag": "UPDATED",
                 "pages": [
                   "guides/clouds/deploy-vm-on-demand",
-                  "guides/clouds/data-science-image-full-specification",
-                  {
-                    "group": "Confidential Compute",
-                    "hidden": false,
-                    "tag": "NEW",
-                    "pages": [
-                      "guides/clouds/confidential-compute-overview",
-                      "guides/clouds/confidential-compute-attestation-overview",
-                      "guides/clouds/confidential-compute-attestation-guide",
-                      {
-                        "group": "Confidential Compute Attestation",
-                        "hidden": true,
-                        "tag": "NEW",
-                        "pages": [
-                          "guides/clouds/confidential-compute-attestation",
-                          "guides/clouds/confidential-compute-attestation-guide"
-                        ]
-                      }
-                    ]
-                  }
+                  "guides/clouds/data-science-image-full-specification"
                 ]
               },
+              "guides/clouds/agent-cloud"
+            ]
+          },
+          {
+            "group": "Managed Services",
+            "pages": [
+              "guides/clouds/deploy-bare-metal-cluster",
               {
                 "group": "Kubernetes",
-                "hidden": true,
                 "tag": "UPDATED",
                 "pages": [
                   "guides/clouds/deploy-kubernetes-cluster",
-                  "guides/clouds/kubernetes-ingress-setup"
-                ]
-              },
-              {
-                "group": "Kubernetes",
-                "hidden": false,
-                "tag": "UPDATED",
-                "pages": [
-                  "guides/clouds/deploy-kubernetes-cluster",
+                  "guides/clouds/kubernetes-ingress-setup",
                   "guides/clouds/kubernetes/exposing-to-the-internet",
                   "guides/clouds/kubernetes/externaldns-guide",
                   "guides/clouds/kubernetes/quick-start",
                   "guides/clouds/kubernetes/optimizations"
                 ]
               },
-              "guides/clouds/agent-cloud"
+              {
+                "group": "Confidential Compute",
+                "pages": [
+                  "guides/clouds/confidential-compute-overview",
+                  "guides/clouds/confidential-compute-attestation-overview",
+                  "guides/clouds/confidential-compute-attestation-guide"
+                ]
+              }
             ]
           },
           {
@@ -206,13 +191,7 @@
           {
             "group": "Integrations",
             "pages": [
-              "guides/intelligence/integrations/openrouter-byok"
-            ]
-          },
-          {
-            "group": "IO Intelligence Integrations",
-            "hidden": true,
-            "pages": [
+              "guides/intelligence/integrations/openrouter-byok",
               "guides/intelligence/integrations/portkey-gateway"
             ]
           },
@@ -456,28 +435,6 @@
                   "reference/vmaas/destroy-deployment"
                 ]
               }
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Support",
-        "hidden": true,
-        "pages": [
-          "/support",
-          {
-            "group": "General",
-            "pages": [
-              "/support/faq",
-              "/support/staking"
-            ]
-          },
-          {
-            "group": "IO Worker",
-            "pages": [
-              "/support/worker-binary",
-              "/support/troubleshooting",
-              "/support/block-rewards"
             ]
           }
         ]
