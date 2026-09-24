@@ -1,0 +1,115 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "IO API",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.io.solutions/"
+    }
+  ],
+  "paths": {
+    "/enterprise/v1/io-cloud/users/burn-rate": {
+      "get": {
+        "tags": [
+          "enterprise-io-cloud-users"
+        ],
+        "summary": "Get Burn Rate",
+        "description": "How much your running Pay-As-You-Go clusters cost per hour, and about how long your credits will last at that rate.",
+        "operationId": "get_user_burn_rate_enterprise_v1_io_cloud_users_burn_rate_get",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "io.net provided API Key",
+              "title": "X-Api-Key"
+            },
+            "description": "io.net provided API Key"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserBurnRateResponse"
+                },
+                "example": {
+                  "data": {
+                    "hourly_rate": 12.48,
+                    "runway_hours_estimate": 36.2,
+                    "cluster_count": 2
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserBurnRateData": {
+        "type": "object",
+        "title": "UserBurnRateData",
+        "required": [
+          "hourly_rate",
+          "runway_hours_estimate",
+          "cluster_count"
+        ],
+        "properties": {
+          "hourly_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hourly Rate",
+            "description": "What your running PAYG clusters cost per hour, in USD. `null` if nothing has been charged yet."
+          },
+          "runway_hours_estimate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runway Hours Estimate",
+            "description": "About how many hours your credits will last at that rate."
+          },
+          "cluster_count": {
+            "type": "integer",
+            "title": "Cluster Count",
+            "description": "How many PAYG clusters you have running."
+          }
+        }
+      },
+      "UserBurnRateResponse": {
+        "type": "object",
+        "title": "UserBurnRateResponse",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/UserBurnRateData"
+          }
+        }
+      }
+    }
+  }
+}

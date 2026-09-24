@@ -157,6 +157,7 @@
             "group": "IO Cloud Payments",
             "pages": [
               "guides/payment/io-cloud-payments",
+              "guides/payment/pay-as-you-go",
               "guides/payment/deploy-cluster-and-pay",
               "guides/payment/extending-your-cluster-and-pay",
               "guides/payment/io-credits",
@@ -455,7 +456,8 @@
                   "reference/vmaas/extend-cluster",
                   "reference/vmaas/destroy-deployment"
                 ]
-              }
+              },
+              "reference/io-cloud/get-burn-rate"
             ]
           }
         ]

@@ -10,7 +10,7 @@
     }
   ],
   "paths": {
-     "/enterprise/v1/io-cloud/vmaas/deploy": {
+    "/enterprise/v1/io-cloud/vmaas/deploy": {
       "post": {
         "tags": [
           "enterprise-io-cloud-vmaas"
@@ -45,9 +45,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           },
@@ -249,6 +247,16 @@
             },
             "type": "object",
             "title": "Network Services"
+          },
+          "billing_model": {
+            "type": "string",
+            "enum": [
+              "duration",
+              "payg"
+            ],
+            "default": "duration",
+            "title": "Billing Model",
+            "description": "Set to `payg` to pay for the cluster from your credits while it runs. With `payg`, `duration_hours` is still required but has no effect. See [Pay-As-You-Go](/guides/payment/pay-as-you-go)."
           }
         },
         "additionalProperties": false,
