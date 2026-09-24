@@ -1,56 +1,56 @@
 ---
 title: "Pay-As-You-Go"
-description: "How IO Cloud bills your clusters from your credits while they run, and what happens when your credits run low."
+description: "How IO Cloud bills your bookings from your credits while they run, and what happens when your credits run low."
 ---
 
-Pay-As-You-Go (PAYG) clusters run until you stop it or your credits run out, and you pay only for the time it runs.
+Pay-As-You-Go (PAYG) bookings run until you stop them or your credits run out, and you pay only for the time they run.
 
 ## Summary
 
 - You pay from your **IO credits**. [Top up your credits](/guides/payment/io-credits) before you deploy.
-- The **first hour is charged when you deploy**. After that, you're charged every few minutes while the cluster runs.
-- The price of a running cluster **can change** if the hardware supplier changes their price. We notify you when this happens.
-- If your credits run out, the cluster is **terminated**.
-- Prepaid time is **not refunded** when you stop a cluster. If a cluster **fails**, the prepaid time is refunded.
+- The **first hour is charged when you deploy**. After that, you're charged every few minutes while the booking runs.
+- The price of a running booking **can change** if the hardware supplier changes their price. We notify you when this happens.
+- If your credits run out, the booking is **terminated**.
+- Prepaid time is **not refunded** when you stop a booking. If a booking **fails for a reason on our side**, the prepaid time is refunded.
 
 ## How billing works
 
 ### When you deploy
 
-When you deploy a cluster, the first hour is charged from your credits right away. If you don't have enough credits for that hour, the cluster isn't deployed.
+When you deploy a booking, the first hour is charged from your credits right away. If you don't have enough credits for that hour, the booking isn't deployed.
 
-If you stop the cluster, this first hour is not refunded, even if you stop it a few minutes after it starts. If the cluster fails, it is refunded.
+If you stop the booking, this first hour is not refunded, even if you stop it a few minutes after it starts. If the booking fails for a reason on our side, it is refunded.
 
-### While the cluster runs
+### While the booking runs
 
-After the first hour, your cluster is charged in small steps every few minutes, always slightly ahead of time, so it keeps running without interruption. If the hardware supplier changes their price while your cluster is running, the new price applies from the next charge. Time you've already paid for isn't affected.
+After the first hour, your booking is charged in small steps every few minutes, always slightly ahead of time, so it keeps running without interruption. If the hardware supplier changes their price while your booking is running, the new price applies from the next charge. Time you've already paid for isn't affected.
 
-All your PAYG clusters are paid from the same credit balance.
+All your PAYG bookings are paid from the same credit balance.
 
 ## When your credits run out
 
-If your credits can't cover the next charge, the cluster is terminated. When several clusters share a low balance, the newest ones are terminated first.
+If your credits can't cover the next charge, the booking is terminated. When several bookings share a low balance, the newest ones are terminated first.
 
-To keep your clusters running, top up your credits when you get a low-balance warning.
+To keep your bookings running, top up your credits when you get a low-balance warning.
 
 <Warning>
-  Termination removes the cluster. Back up any data you need before your credits run out.
+  Termination removes the booking. Back up any data you need before your credits run out.
 </Warning>
 
 ## Notifications
 
-We send email and in-app notifications so you can top up or stop clusters in time:
+We send email and in-app notifications so you can top up or stop bookings in time:
 
-- **Low balance:** when your credits are getting low compared to how fast your clusters use them, with a final warning shortly before your clusters would be terminated.
-- **Price change:** when the price of a running cluster changes because its hardware supplier changed their price.
+- **Low balance:** when your credits are getting low compared to how fast your bookings use them, with a final warning shortly before your bookings would be terminated.
+- **Price change:** when the price of a running booking changes because its hardware supplier changed their price.
 
-## Stopping a cluster
+## Stopping a booking
 
-Stop a cluster from its page in IO Cloud, or with the destroy endpoint for [VMs](/reference/vmaas/destroy-deployment) or [containers](/reference/caas/destroy-container). Billing stops when the cluster stops. Prepaid time that's left over is not refunded.
+Stop a booking from its page in IO Cloud, or with the destroy endpoint for [VMs](/reference/vmaas/destroy-deployment) or [containers](/reference/caas/destroy-container). Billing stops when the booking stops. Prepaid time that's left over is not refunded.
 
 ## Checking your burn rate
 
-Your burn rate is how much your running PAYG clusters cost per hour, in total. To check it with the API, use [Get Burn Rate](/reference/io-cloud/get-burn-rate):
+Your burn rate is how much your running PAYG bookings cost per hour, in total. To check it with the API, use [Get Burn Rate](/reference/io-cloud/get-burn-rate):
 
 ```bash
 curl -X GET 'https://api.io.solutions/enterprise/v1/io-cloud/users/burn-rate' \
@@ -67,20 +67,20 @@ curl -X GET 'https://api.io.solutions/enterprise/v1/io-cloud/users/burn-rate' \
 }
 ```
 
-- `hourly_rate`: what your running PAYG clusters cost per hour, in USD.
+- `hourly_rate`: what your running PAYG bookings cost per hour, in USD.
 - `runway_hours_estimate`: about how many hours your credits will last at that rate.
-- `cluster_count`: how many PAYG clusters you have running.
+- `cluster_count`: how many PAYG bookings you have running.
 
 ## FAQ
 
 <AccordionGroup>
   <Accordion title="Can I get a refund for unused time?">
-    Not if you stop the cluster yourself. If the cluster fails, the prepaid time is refunded.
+    Not if you stop the booking yourself, or if it fails because of something done on your side. If the booking fails for a reason on our side, the prepaid time is refunded.
   </Accordion>
-  <Accordion title="Why was my newest cluster terminated and not an older one?">
-    All your clusters share one credit balance. When it runs low, the newest clusters are terminated first so the older ones can keep running.
+  <Accordion title="Why was my newest booking terminated and not an older one?">
+    All your bookings share one credit balance. When it runs low, the newest bookings are terminated first so the older ones can keep running.
   </Accordion>
-  <Accordion title="Can I pay for a PAYG cluster with IO Coin, USDC or a card?">
-    Not directly. PAYG clusters are paid from credits. Use IO Coin, USDC or a card to [buy credits](/guides/payment/io-credits), then deploy.
+  <Accordion title="Can I pay for a PAYG booking with IO Coin, USDC or a card?">
+    Not directly. PAYG bookings are paid from credits. Use IO Coin, USDC or a card to [buy credits](/guides/payment/io-credits), then deploy.
   </Accordion>
 </AccordionGroup>
