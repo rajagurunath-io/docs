@@ -3,13 +3,13 @@ title: "Pay-As-You-Go"
 description: "How IO Cloud bills your clusters from your credits while they run, and what happens when your credits run low."
 ---
 
-Pay-As-You-Go (PAYG) clusters have no fixed rental period. A cluster runs until you stop it or your credits run out, and you pay only for the time it runs, at the current price of the hardware.
+Pay-As-You-Go (PAYG) clusters run until you stop it or your credits run out, and you pay only for the time it runs.
 
 ## Summary
 
 - You pay from your **IO credits**. [Top up your credits](/guides/payment/io-credits) before you deploy.
 - The **first hour is charged when you deploy**. After that, you're charged every few minutes while the cluster runs.
-- You always pay the **current price** for your hardware.
+- The price of a running cluster **can change** if the hardware supplier changes their price. We notify you when this happens.
 - If your credits run out, the cluster is **terminated**.
 - Prepaid time is **not refunded** when you stop a cluster. If a cluster **fails**, the prepaid time is refunded.
 
@@ -23,7 +23,7 @@ If you stop the cluster, this first hour is not refunded, even if you stop it a 
 
 ### While the cluster runs
 
-After the first hour, your cluster is charged in small steps every few minutes, always slightly ahead of time, so it keeps running without interruption. Each charge uses the current price of the hardware, so if the price changes, the next charge reflects it.
+After the first hour, your cluster is charged in small steps every few minutes, always slightly ahead of time, so it keeps running without interruption. If the hardware supplier changes their price while your cluster is running, the new price applies from the next charge. Time you've already paid for isn't affected.
 
 All your PAYG clusters are paid from the same credit balance.
 
@@ -42,7 +42,7 @@ To keep your clusters running, top up your credits when you get a low-balance wa
 We send email and in-app notifications so you can top up or stop clusters in time:
 
 - **Low balance:** when your credits are getting low compared to how fast your clusters use them, with a final warning shortly before your clusters would be terminated.
-- **Price change:** when the price of hardware your running clusters use changes.
+- **Price change:** when the price of a running cluster changes because its hardware supplier changed their price.
 
 ## Stopping a cluster
 
@@ -70,30 +70,6 @@ curl -X GET 'https://api.io.solutions/enterprise/v1/io-cloud/users/burn-rate' \
 - `hourly_rate`: what your running PAYG clusters cost per hour, in USD.
 - `runway_hours_estimate`: about how many hours your credits will last at that rate.
 - `cluster_count`: how many PAYG clusters you have running.
-
-## Deploying PAYG clusters with the API
-
-Set `billing_model` to `"payg"` in the deploy request:
-
-- [Deploy a VM](/reference/vmaas/deploy-vms): `POST /enterprise/v1/io-cloud/vmaas/deploy`
-- [Deploy a Container](/reference/caas/deploy-a-container): `POST /enterprise/v1/io-cloud/caas/deploy`
-
-```bash
-curl -X POST 'https://api.io.solutions/enterprise/v1/io-cloud/vmaas/deploy' \
-  -H "X-API-KEY: $IO_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "resource_private_name": "my-payg-vm",
-    "billing_model": "payg",
-    "duration_hours": 1,
-    "gpus_per_vm": 1,
-    "hardware_id": 123,
-    "location_ids": ["US"],
-    "ssh_keys": {"my-key": "ssh-ed25519 AAAA..."}
-  }'
-```
-
-`duration_hours` is still required in the request but has no effect on PAYG clusters.
 
 ## FAQ
 
