@@ -457,7 +457,12 @@
                   "reference/vmaas/destroy-deployment"
                 ]
               },
-              "reference/io-cloud/get-burn-rate"
+              {
+                "group": "Billing",
+                "pages": [
+                  "reference/io-cloud/get-burn-rate"
+                ]
+              }
             ]
           }
         ]
