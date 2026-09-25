@@ -10,7 +10,7 @@
     }
   ],
   "paths": {
-     "/enterprise/v1/io-cloud/vmaas/deploy": {
+    "/enterprise/v1/io-cloud/vmaas/deploy": {
       "post": {
         "tags": [
           "enterprise-io-cloud-vmaas"
@@ -45,9 +45,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           },

@@ -91,7 +91,7 @@
     }
   },
   "components": {
-     "securitySchemes": {
+    "securitySchemes": {
       "HTTPBasic": {
         "type": "http",
         "scheme": "basic"
