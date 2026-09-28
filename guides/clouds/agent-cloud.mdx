@@ -84,17 +84,22 @@ Add this to your `claude_desktop_config.json` (found in `%AppData%\Claude` on Wi
 | **CaaS** | `caas_get_deployment` | Details of a single deployment. |
 | **CaaS** | `caas_get_deployment_containers` | Containers running inside a deployment. |
 | **CaaS** | `caas_update_deployment` | Change an existing deployment. |
-| **CaaS** | `caas_extend_deployment_duration` | Add runtime to a deployment. |
+| **CaaS** | `caas_extend_deployment_duration` | Add runtime to a duration-billed deployment. |
 | **CaaS** | `caas_destroy_deployment` | Terminate a deployment and stop billing. |
 | **VMaaS** | `vmaas_get_hardware_list` | Browsing available GPU/CPU configurations. |
 | **VMaaS** | `vmaas_deploy_vm` | Provision a VM cluster. |
 | **VMaaS** | `vmaas_list_deployments` | Real-time status of your VM clusters. |
 | **VMaaS** | `vmaas_get_deployment` | Details of a single VM deployment. |
 | **VMaaS** | `vmaas_get_deployment_vms` | VMs running inside a deployment. |
-| **VMaaS** | `vmaas_extend_cluster_duration` | Add runtime to a VM cluster. |
+| **VMaaS** | `vmaas_extend_cluster_duration` | Add runtime to a duration-billed VM cluster. |
 | **VMaaS** | `vmaas_destroy_deployment` | Terminate a VM cluster and stop billing. |
+| **Account** | `get_credit_status` | Check credit balances, PayG hourly burn rate, and estimated runway when available. |
 
-The recommended flow is: pick hardware from the catalog, estimate the price, deploy, then manage.
+For duration billing, the recommended flow is: pick hardware from the catalog, estimate the price, deploy, then manage. `caas_get_price_estimate` returns a duration-based price; it does not predict the hourly PayG charge of a new deployment.
+
+Both deploy tools default to `billing_model: "duration"`. Set `billing_model: "payg"` on the deploy request for ongoing billing. The API currently requires `duration_hours` for PayG requests, but it does not limit the deployment's lifetime. Only duration-billed deployments can use the extend tools; destroy a PayG deployment to stop billing.
+
+Use `get_credit_status` to check your balance and current PayG burn rate. Estimated runway can change with GPU prices.
 
 ### Working with Hardware IDs
 
@@ -110,7 +115,7 @@ Every deploy needs a placement, so `location_ids` is not optional in practice: p
 
 ### Topping Up Credits with x402
 
-When a deploy or extend is short on credits, IO Cloud answers with **x402**, the HTTP 402 payment protocol, so your agent can settle the bill and continue without a human opening the dashboard.
+When a deploy or extend is short on credits, IO Cloud answers with **x402**, the HTTP 402 payment protocol, so your agent can settle the bill and continue without a human opening the dashboard. This handles a shortfall during a request; Agent Cloud does not currently offer a standalone MCP tool to add credits proactively while PayG deployments are running.
 
 The four tools that spend credits (`caas_deploy_container`, `caas_extend_deployment_duration`, `vmaas_deploy_vm`, `vmaas_extend_cluster_duration`) return `status: "payment_required"` instead of an error. This is a bill to pay and then retry, not a failure.
 
