@@ -1,6 +1,6 @@
 ---
 title: "Confidential Compute"
-description: "Run secure AI workloads with Intel TDX encryption on io.cloud. Protect data in use on H100, H200, and B200 GPUs at up to 90% lower cost."
+description: "Run secure AI workloads with Intel TDX or AMD SEV-SNP encryption on io.cloud. Protect data in use on H100, H200, and B200 GPUs at up to 90% lower cost."
 sidebarTitle: "Overview"
 ---
 
@@ -10,7 +10,7 @@ sidebarTitle: "Overview"
 
 Unlike traditional cloud environments that only encrypt data at rest and in transit, **Confidential Compute** maintains end-to-end encryption even in memory while your workloads are running.
 
-This capability is powered by **Intel Trust Domain Extensions (TDX)** on **5th** and **6th** **generation** **Intel Xeon processors**, combined with [io.net](http://io.net)’s decentralized GPU network.
+This capability is powered by **Intel Trust Domain Extensions (TDX)** on **5th** and **6th** **generation** **Intel Xeon processors**, or **AMD Secure Encrypted Virtualization (SEV-SNP)** on **AMD EPYC processors**, combined with [io.net](http://io.net)’s decentralized GPU network.
 
 ## **What Is Confidential Computing?**
 
@@ -21,6 +21,8 @@ Using **Trusted Execution Environments (TEEs)**, it creates isolated regions of 
 ### **Key Technology**
 
 - **Intel Trust Domain Extensions (TDX):** Provides per-VM encryption and isolation for workloads.
+- **AMD Secure Encrypted Virtualization (SEV-SNP):** Provides per-VM memory encryption with integrity protection.
+- **NVIDIA Confidential Computing:** Extends protection to the GPU, keeping model weights and activations encrypted on the accelerator.
 - **Trusted Execution Environments:** Secure enclaves ensure no unauthorized party can read memory contents.
 - **Hardware Attestation:** Verifies the integrity of BIOS, firmware, and kernel before execution.
 
@@ -60,8 +62,8 @@ To begin using **Confidential Compute** on [io.net](http://io.net):
      Our specialists will reach out to understand your needs and assist with configuring the machines to your specifications.
    </Note>
 2. **Deploy a Confidential VM:** Once set up, deploy your Confidential VM using the web console or API.
-3. **Verify Attestation:** Before running sensitive workloads, verify your instance’s attestation report to confirm the integrity of its BIOS, firmware, and TDX configuration. This ensures your VM is operating in a trusted, secure state.
-4. **Integrate Seamlessly:** Run workloads on **Ubuntu 24.04 (LTS)** with **built-in Intel TDX support**. Existing MLOps pipelines run without modification. You can migrate existing workflows directly to [io.net](http://io.net) without changing your training or deployment code.
+3. **Verify Attestation:** Before running sensitive workloads, verify your instance’s attestation report to confirm the integrity of its BIOS, firmware, and confidential computing configuration. This ensures your VM is operating in a trusted, secure state.
+4. **Integrate Seamlessly:** Run workloads on **Ubuntu 24.04 (LTS)** with **built-in confidential computing support**. Existing MLOps pipelines run without modification. You can migrate existing workflows directly to [io.net](http://io.net) without changing your training or deployment code.
 5. **Run Secure Workloads:** Connect to your instance and deploy your AI training or inference workloads as usual. All computations, model weights, and data remain encrypted in memory throughout processing, maintaining full performance and GPU acceleration.
 
 <Note>
