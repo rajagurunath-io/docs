@@ -1,0 +1,64 @@
+---
+title: "Responses API"
+description: "Stateless Responses requests, streaming and function tool replay."
+---
+
+`POST /api/v1/responses` adapts Responses requests to our model-serving chat pipeline. Model availability and optional capabilities are enabled per model. No server-managed response history is retained.
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="YOUR_IO_API_KEY",
+    base_url="https://api.intelligence.io.solutions/api/v1",
+)
+response = client.responses.create(
+    model="ENABLED_MODEL", input="Explain token caching.", store=False,
+)
+print(response.output_text)
+```
+
+Set `stream=True` for Responses SSE events. Events carry increasing `sequence_number` values, stable item IDs and one terminal completed/incomplete/failed response. There is no `[DONE]` sentinel.
+
+## Supported contract
+
+| Feature | Behavior |
+|---|---|
+| Input | String or text message items; system/developer/user/assistant roles; instructions |
+| Functions | Flat function definitions, auto/none/required/named choice, parallel calls |
+| Structured output | `text.format`: text, json_object or json_schema when supported |
+| Reasoning | Model-supported effort/enabled controls; raw reasoning items |
+| Usage | Input/output/total tokens; cached/reasoning tokens; cache writes only when measured |
+| Advisory fields | Metadata, user, safety_identifier, prompt_cache_key and service_tier accepted but not forwarded or retained; metadata returned empty, tier default |
+| Stateless controls | `store:false`, no conversation or previous_response_id; truncation disabled |
+
+## Tool loop / multiple turns
+
+Clients resend previous input and output items, including exact function argument strings and call IDs. Tools execute in your application.
+
+```python
+tools = [{"type": "function", "name": "weather",
+          "parameters": {"type": "object", "properties": {
+              "city": {"type": "string"}}, "required": ["city"]}}]
+history = [{"role": "user", "content": "Weather in Paris?"}]
+first = client.responses.create(model="ENABLED_MODEL", input=history,
+                                tools=tools, tool_choice="required", store=False)
+call = next(item for item in first.output if item.type == "function_call")
+history += [item.model_dump(exclude_none=True) for item in first.output]
+history += [{"type": "function_call_output", "call_id": call.call_id,
+             "output": "Sunny, 20 C"}]
+second = client.responses.create(model="ENABLED_MODEL", input=history,
+                                 tools=tools, store=False)
+```
+
+Resolve every function call before replaying the next turn. `previous_response_id` is unsupported.
+
+## Compatibility limits
+
+Unsupported parameters/tools return HTTP 400 with an OpenAI-style error object. No retrieve/delete/cancel/input-items routes. Storage, background execution, automatic truncation, image/file/audio/video input, hosted/custom tools, stored prompts, routing extensions, reasoning summaries/budgets and text verbosity are unsupported. The encryption include selector is accepted, but encrypted reasoning is not produced or replayed.
+
+Accounts requiring storage receive HTTP 403. Unknown retention policy receives HTTP 503. Requests are limited to 2 MiB input; output to 4 MiB and 128 items. Streaming disconnect cancels upstream generation; token usage may be unavailable if the backend has not reported it.
+
+OpenAI `responses.create`/`responses.stream` and the OpenRouter benchmark harness are compatibility targets. Some clients require unsupported tools, encryption or state. Codex modes using custom/apply_patch tools are unsupported; universal client compatibility is not promised. Strict SDK versions requiring `cache_write_tokens` may reject responses when the backend does not measure that field.
+
+See the [endpoint reference](/reference/ai-models/create-response).

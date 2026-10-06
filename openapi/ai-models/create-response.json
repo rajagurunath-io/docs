@@ -1,0 +1,1116 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "IO Intelligence",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.intelligence.io.solutions"
+    }
+  ],
+  "security": [
+    {
+      "sec0": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "sec0": {
+        "type": "oauth2",
+        "flows": {}
+      }
+    }
+  },
+  "paths": {
+    "/api/v1/responses": {
+      "post": {
+        "tags": [
+          "OpenAI Compatible Developer API"
+        ],
+        "summary": "Create Response",
+        "operationId": "create_response",
+        "description": "Stateless text/function-tool Responses adapter. Availability and optional features depend on the selected model. Clients resend complete history; storage and server-managed conversation references are unsupported.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "model": {
+                    "minLength": 1,
+                    "title": "Model",
+                    "type": "string"
+                  },
+                  "input": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "items": {
+                          "additionalProperties": true,
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    ],
+                    "title": "Input"
+                  },
+                  "instructions": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Instructions"
+                  },
+                  "stream": {
+                    "default": false,
+                    "title": "Stream",
+                    "type": "boolean"
+                  },
+                  "store": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": false,
+                    "title": "Store"
+                  },
+                  "background": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": false,
+                    "title": "Background"
+                  },
+                  "previous_response_id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Previous Response Id"
+                  },
+                  "conversation": {
+                    "default": null,
+                    "title": "Conversation"
+                  },
+                  "tools": {
+                    "items": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    },
+                    "maxItems": 128,
+                    "title": "Tools",
+                    "type": "array"
+                  },
+                  "tool_choice": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "auto",
+                          "none",
+                          "required"
+                        ],
+                        "type": "string"
+                      },
+                      {
+                        "additionalProperties": true,
+                        "type": "object"
+                      }
+                    ],
+                    "default": "auto",
+                    "title": "Tool Choice"
+                  },
+                  "parallel_tool_calls": {
+                    "default": true,
+                    "title": "Parallel Tool Calls",
+                    "type": "boolean"
+                  },
+                  "reasoning": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "effort": {
+                            "anyOf": [
+                              {
+                                "enum": [
+                                  "none",
+                                  "minimal",
+                                  "low",
+                                  "medium",
+                                  "high",
+                                  "xhigh",
+                                  "max"
+                                ],
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ],
+                            "default": null,
+                            "title": "Effort"
+                          },
+                          "enabled": {
+                            "anyOf": [
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ],
+                            "default": null,
+                            "title": "Enabled"
+                          },
+                          "summary": {
+                            "anyOf": [
+                              {
+                                "enum": [
+                                  "auto",
+                                  "concise",
+                                  "detailed"
+                                ],
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ],
+                            "default": null,
+                            "title": "Summary"
+                          },
+                          "max_tokens": {
+                            "anyOf": [
+                              {
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ],
+                            "default": null,
+                            "title": "Max Tokens"
+                          }
+                        },
+                        "title": "ResponsesReasoning",
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null
+                  },
+                  "text": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "format": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "type": {
+                                    "default": "text",
+                                    "enum": [
+                                      "text",
+                                      "json_object",
+                                      "json_schema"
+                                    ],
+                                    "title": "Type",
+                                    "type": "string"
+                                  },
+                                  "name": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ],
+                                    "default": null,
+                                    "title": "Name"
+                                  },
+                                  "description": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ],
+                                    "default": null,
+                                    "title": "Description"
+                                  },
+                                  "schema": {
+                                    "anyOf": [
+                                      {
+                                        "additionalProperties": true,
+                                        "type": "object"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ],
+                                    "default": null,
+                                    "title": "Schema"
+                                  },
+                                  "strict": {
+                                    "anyOf": [
+                                      {
+                                        "type": "boolean"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ],
+                                    "default": null,
+                                    "title": "Strict"
+                                  }
+                                },
+                                "title": "ResponsesTextFormat",
+                                "type": "object"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ],
+                            "default": null
+                          },
+                          "verbosity": {
+                            "anyOf": [
+                              {
+                                "enum": [
+                                  "low",
+                                  "medium",
+                                  "high"
+                                ],
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ],
+                            "default": null,
+                            "title": "Verbosity"
+                          }
+                        },
+                        "title": "ResponsesText",
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null
+                  },
+                  "max_output_tokens": {
+                    "anyOf": [
+                      {
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Max Output Tokens"
+                  },
+                  "temperature": {
+                    "anyOf": [
+                      {
+                        "maximum": 2,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Temperature"
+                  },
+                  "top_p": {
+                    "anyOf": [
+                      {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Top P"
+                  },
+                  "top_k": {
+                    "anyOf": [
+                      {
+                        "minimum": -1,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Top K"
+                  },
+                  "frequency_penalty": {
+                    "anyOf": [
+                      {
+                        "maximum": 2,
+                        "minimum": -2,
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Frequency Penalty"
+                  },
+                  "presence_penalty": {
+                    "anyOf": [
+                      {
+                        "maximum": 2,
+                        "minimum": -2,
+                        "type": "number"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Presence Penalty"
+                  },
+                  "top_logprobs": {
+                    "anyOf": [
+                      {
+                        "maximum": 20,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Top Logprobs"
+                  },
+                  "include": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Include",
+                    "type": "array"
+                  },
+                  "metadata": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Metadata"
+                  },
+                  "user": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "User"
+                  },
+                  "safety_identifier": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Safety Identifier"
+                  },
+                  "prompt_cache_key": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Prompt Cache Key"
+                  },
+                  "service_tier": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "auto",
+                          "default",
+                          "flex",
+                          "priority",
+                          "scale"
+                        ],
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Service Tier"
+                  },
+                  "truncation": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "disabled",
+                          "auto"
+                        ],
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": "disabled",
+                    "title": "Truncation"
+                  }
+                },
+                "required": [
+                  "model",
+                  "input"
+                ],
+                "title": "ResponsesRequest",
+                "type": "object"
+              },
+              "example": {
+                "model": "enabled-model",
+                "input": "Hello",
+                "store": false,
+                "stream": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response JSON, or ordered Responses SSE events when stream=true. No [DONE] sentinel.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "id": {
+                      "title": "Id",
+                      "type": "string"
+                    },
+                    "object": {
+                      "const": "response",
+                      "default": "response",
+                      "title": "Object",
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "title": "Created At",
+                      "type": "integer"
+                    },
+                    "model": {
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "in_progress",
+                        "completed",
+                        "incomplete",
+                        "failed"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "output": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Output",
+                      "type": "array"
+                    },
+                    "error": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": true,
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "default": null,
+                      "title": "Error"
+                    },
+                    "incomplete_details": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": true,
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "default": null,
+                      "title": "Incomplete Details"
+                    },
+                    "usage": {
+                      "anyOf": [
+                        {
+                          "properties": {
+                            "input_tokens": {
+                              "title": "Input Tokens",
+                              "type": "integer"
+                            },
+                            "output_tokens": {
+                              "title": "Output Tokens",
+                              "type": "integer"
+                            },
+                            "total_tokens": {
+                              "title": "Total Tokens",
+                              "type": "integer"
+                            },
+                            "input_tokens_details": {
+                              "additionalProperties": {
+                                "type": "integer"
+                              },
+                              "title": "Input Tokens Details",
+                              "type": "object"
+                            },
+                            "output_tokens_details": {
+                              "additionalProperties": {
+                                "type": "integer"
+                              },
+                              "title": "Output Tokens Details",
+                              "type": "object"
+                            }
+                          },
+                          "required": [
+                            "input_tokens",
+                            "output_tokens",
+                            "total_tokens"
+                          ],
+                          "title": "ResponsesUsage",
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "default": null
+                    },
+                    "store": {
+                      "const": false,
+                      "default": false,
+                      "title": "Store",
+                      "type": "boolean"
+                    },
+                    "background": {
+                      "const": false,
+                      "default": false,
+                      "title": "Background",
+                      "type": "boolean"
+                    },
+                    "previous_response_id": {
+                      "default": null,
+                      "title": "Previous Response Id",
+                      "type": "null"
+                    },
+                    "instructions": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "default": null,
+                      "title": "Instructions"
+                    },
+                    "max_output_tokens": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "default": null,
+                      "title": "Max Output Tokens"
+                    },
+                    "parallel_tool_calls": {
+                      "default": true,
+                      "title": "Parallel Tool Calls",
+                      "type": "boolean"
+                    },
+                    "tool_choice": {
+                      "default": "auto",
+                      "title": "Tool Choice"
+                    },
+                    "tools": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Tools",
+                      "type": "array"
+                    },
+                    "text": {
+                      "additionalProperties": true,
+                      "title": "Text",
+                      "type": "object"
+                    },
+                    "reasoning": {
+                      "additionalProperties": true,
+                      "title": "Reasoning",
+                      "type": "object"
+                    },
+                    "temperature": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "default": null,
+                      "title": "Temperature"
+                    },
+                    "top_p": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "default": null,
+                      "title": "Top P"
+                    },
+                    "truncation": {
+                      "const": "disabled",
+                      "default": "disabled",
+                      "title": "Truncation",
+                      "type": "string"
+                    },
+                    "service_tier": {
+                      "const": "default",
+                      "default": "default",
+                      "title": "Service Tier",
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "title": "Metadata",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "created_at",
+                    "model",
+                    "status"
+                  ],
+                  "title": "ResponsesResponse",
+                  "type": "object"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "event: response.created\ndata: {\"type\":\"response.created\",\"sequence_number\":0,\"response\":{\"id\":\"resp_example\",\"object\":\"response\",\"status\":\"in_progress\",\"output\":[],\"store\":false}}\n\n"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or unsupported request parameter/tool",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "type",
+                        "param",
+                        "code"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "param": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "type",
+                        "param",
+                        "code"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "param": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Model access or retention policy conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "type",
+                        "param",
+                        "code"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "param": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Input exceeds 2 MiB",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "type",
+                        "param",
+                        "code"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "param": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate, quota or credit limit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "type",
+                        "param",
+                        "code"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "param": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Upstream failure or output exceeds limit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "type",
+                        "param",
+                        "code"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "param": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Routing or retention policy unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "type",
+                        "param",
+                        "code"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "param": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Inference deadline exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "type",
+                        "param",
+                        "code"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "param": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "code": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

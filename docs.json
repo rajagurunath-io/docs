@@ -182,7 +182,8 @@
               "guides/intelligence/training-as-a-service",
               "guides/intelligence/api-keys-and-secrets",
               "guides/intelligence/sub-api-keys",
-              "guides/intelligence/reasoning-for-chat-completions"
+              "guides/intelligence/reasoning-for-chat-completions",
+              "guides/intelligence/responses-api"
             ]
           },
           {
@@ -374,7 +375,8 @@
                   "reference/ai-models/get-started-with-io-intelligence-api",
                   "reference/ai-models/uploading-images",
                   "reference/ai-models/get-models-list",
-                  "reference/ai-models/create-chat-completion"
+                  "reference/ai-models/create-chat-completion",
+                  "reference/ai-models/create-response"
                 ]
               },
               {
