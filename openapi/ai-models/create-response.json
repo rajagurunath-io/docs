@@ -30,7 +30,7 @@
         ],
         "summary": "Create Response",
         "operationId": "create_response",
-        "description": "Stateless text/function-tool Responses adapter. Availability and optional features depend on the selected model. Clients resend complete history; storage and server-managed conversation references are unsupported.",
+        "description": "Stateless native text/function-tool Responses proxy. Availability and optional features depend on the selected model. Clients resend complete history; storage and server-managed conversation references are unsupported.",
         "requestBody": {
           "required": true,
           "content": {
@@ -558,6 +558,18 @@
                       "title": "Created At",
                       "type": "integer"
                     },
+                    "completed_at": {
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "default": null,
+                      "title": "Completed At"
+                    },
                     "model": {
                       "title": "Model",
                       "type": "string"
@@ -710,14 +722,28 @@
                       "type": "array"
                     },
                     "text": {
-                      "additionalProperties": true,
-                      "title": "Text",
-                      "type": "object"
+                      "anyOf": [
+                        {
+                          "additionalProperties": true,
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "title": "Text"
                     },
                     "reasoning": {
-                      "additionalProperties": true,
-                      "title": "Reasoning",
-                      "type": "object"
+                      "anyOf": [
+                        {
+                          "additionalProperties": true,
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "title": "Reasoning"
                     },
                     "temperature": {
                       "anyOf": [

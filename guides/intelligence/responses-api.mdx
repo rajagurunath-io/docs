@@ -3,7 +3,7 @@ title: "Responses API"
 description: "Stateless Responses requests, streaming and function tool replay."
 ---
 
-`POST /api/v1/responses` adapts Responses requests to our model-serving chat pipeline. Model availability and optional capabilities are enabled per model. No server-managed response history is retained.
+`POST /api/v1/responses` forwards native Responses requests through Portkey to a certified model engine. Model availability and optional capabilities are enabled only after model-specific compatibility and privacy tests pass. There is no chat fallback. No server-managed response history is retained.
 
 ```python
 from openai import OpenAI
@@ -18,7 +18,7 @@ response = client.responses.create(
 print(response.output_text)
 ```
 
-Set `stream=True` for Responses SSE events. Events carry increasing `sequence_number` values, stable item IDs and one terminal completed/incomplete/failed response. There is no `[DONE]` sentinel.
+Set `stream=True` for Responses SSE events. Events carry increasing `sequence_number` values, stable item IDs and a native terminal completed/incomplete/failed response. There is no `[DONE]` sentinel.
 
 ## Supported contract
 
@@ -27,7 +27,7 @@ Set `stream=True` for Responses SSE events. Events carry increasing `sequence_nu
 | Input | String or text message items; system/developer/user/assistant roles; instructions |
 | Functions | Flat function definitions, auto/none/required/named choice, parallel calls |
 | Structured output | `text.format`: text, json_object or json_schema when supported |
-| Reasoning | Model-supported effort/enabled controls; raw reasoning items |
+| Reasoning | Certified model-supported effort values; native reasoning-item replay |
 | Usage | Input/output/total tokens; cached/reasoning tokens; cache writes only when measured |
 | Advisory fields | Metadata, user, safety_identifier, prompt_cache_key and service_tier accepted but not forwarded or retained; metadata returned empty, tier default |
 | Stateless controls | `store:false`, no conversation or previous_response_id; truncation disabled |
@@ -55,10 +55,10 @@ Resolve every function call before replaying the next turn. `previous_response_i
 
 ## Compatibility limits
 
-Unsupported parameters/tools return HTTP 400 with an OpenAI-style error object. No retrieve/delete/cancel/input-items routes. Storage, background execution, automatic truncation, image/file/audio/video input, hosted/custom tools, stored prompts, routing extensions, reasoning summaries/budgets and text verbosity are unsupported. The encryption include selector is accepted, but encrypted reasoning is not produced or replayed.
+Unsupported parameters/tools return HTTP 400 with an OpenAI-style error object. No retrieve/delete/cancel/input-items routes. Storage, background execution, automatic truncation, image/file/audio/video input, hosted/custom tools, stored prompts, routing extensions, reasoning enabled/summary/budget controls, logprobs and text verbosity are unsupported. The encryption include selector is accepted, but encrypted reasoning is not produced or replayed.
 
-Accounts requiring storage receive HTTP 403. Unknown retention policy receives HTTP 503. Requests are limited to 2 MiB input; output to 4 MiB and 128 items. Streaming disconnect cancels upstream generation; token usage may be unavailable if the backend has not reported it.
+Accounts requiring storage receive HTTP 403. Unknown retention policy receives HTTP 503. Requests are limited to 2 MiB input; upstream output to 4 MiB, input to 128 items and tools to 128. Streaming disconnect closes the upstream connection; token usage may be unavailable if the backend has not reported it.
 
-OpenAI `responses.create`/`responses.stream` and the OpenRouter benchmark harness are compatibility targets. Some clients require unsupported tools, encryption or state. Codex modes using custom/apply_patch tools are unsupported; universal client compatibility is not promised. Strict SDK versions requiring `cache_write_tokens` may reject responses when the backend does not measure that field.
+OpenAI `responses.create`/`responses.stream` and the OpenRouter benchmark harness are compatibility targets. Some clients require unsupported tools, encryption or state. Codex modes using custom/apply_patch tools are unsupported; universal client compatibility is not promised. Engine versions differ in event and nullable-field behavior. A model that fails the SDK or harness checks remains disabled. Missing or malformed final usage cannot be treated as zero; an unexpected stream end emits an error rather than an invented completion.
 
 See the [endpoint reference](/reference/ai-models/create-response).
