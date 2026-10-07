@@ -449,6 +449,21 @@
                     "default": null,
                     "title": "Metadata"
                   },
+                  "client_metadata": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Client Metadata"
+                  },
                   "user": {
                     "anyOf": [
                       {
