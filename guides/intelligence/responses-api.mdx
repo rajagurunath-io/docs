@@ -3,7 +3,7 @@ title: "Responses API"
 description: "Stateless Responses requests, streaming and function tool replay."
 ---
 
-`POST /api/v1/responses` forwards native Responses requests through Portkey to a certified model engine. Model availability and optional capabilities are enabled only after model-specific compatibility and privacy tests pass. There is no chat fallback. No server-managed response history is retained.
+`POST /api/v1/responses` forwards native Responses requests through Portkey to the configured inference backend. Saved Portkey routing may select internally hosted models or OpenRouter/provider fallback. Model availability and optional capabilities are enabled only after model-specific compatibility and privacy tests pass. Requests remain native Responses throughout; there is no Responses-to-chat conversion. No server-managed response history is retained.
 
 ```python
 from openai import OpenAI
