@@ -285,6 +285,12 @@
             ],
             "title": "Precision",
             "description": "Model precision type (e.g., 'fp16', 'fp32', 'int8', 'int4')"
+          },
+          "supports_responses": {
+            "default": false,
+            "description": "Whether stateless native Responses is enabled and certified",
+            "title": "Supports Responses",
+            "type": "boolean"
           }
         },
         "additionalProperties": true,
